@@ -1,0 +1,82 @@
+{% extends 'analyzer_app/base.html' %}
+
+{% block title %}Analyze Your Document | BrainBoost{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="mb-4">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger alert-custom alert-danger-custom">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+
+    <div class="mb-3">
+        <label for="{{ form.document.id_for_label }}" class="form-label">{{ form.document.label }}</label>
+        {{ form.document }}
+        {% if form.document.errors %}
+            <div class="alert alert-danger mt-1 p-2">{{ form.document.errors|join:", " }}</div>
+        {% endif %}
+        <div class="form-text">Supported formats: .txt, .pdf, .docx. Max file size: 5MB (example limit).</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.analysis_type.id_for_label }}" class="form-label">{{ form.analysis_type.label }}</label>
+        {{ form.analysis_type }}
+        {% if form.analysis_type.errors %}
+            <div class="alert alert-danger mt-1 p-2">{{ form.analysis_type.errors|join:", " }}</div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100 btn-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb-fill me-2" viewBox="0 0 16 16">
+          <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5"/>
+        </svg>
+        Boost My Understanding!
+    </button>
+</form>
+
+{% if error_message %}
+    <div class="alert alert-danger alert-custom alert-danger-custom mt-4" role="alert">
+        <h5 class="alert-heading">Analysis Error!</h5>
+        <p>{{ error_message }}</p>
+        <hr>
+        <p class="mb-0">Please check your document, ensure it's a supported format, and try again. If the problem persists, the AI service might be temporarily unavailable.</p>
+    </div>
+{% endif %}
+
+{% if extracted_text_preview and not error_message %}
+    <div class="result-section mt-4">
+        <h4>Extracted Text Preview (first 500 characters):</h4>
+        <div class="extracted-text-preview">
+            {{ extracted_text_preview }}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if analysis_result and not error_message %}
+    <div class="result-section mt-4">
+        <h4>✨ BrainBoost Analysis Complete! ✨</h4>
+        {% if analysis_result.summary %}
+            <h5>Summary:</h5>
+            <p style="white-space: pre-wrap;">{{ analysis_result.summary }}</p>
+        {% elif analysis_result.questions %}
+            <h5>Generated Questions:</h5>
+            {% if analysis_result.questions %}
+                <ul class="list-group">
+                    {% for question in analysis_result.questions %}
+                        <li class="list-group-item">{{ question }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No questions were generated. The document might be too short or the content did not lend itself to question generation.</p>
+            {% endif %}
+        {% else %}
+            <p>The analysis was performed, but the result format is not recognized.</p>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% endblock %}
