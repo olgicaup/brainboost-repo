@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analyze Your Document | BrainBoost</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/analyzer_app/css/brain_boost.css" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fileInput = document.getElementById("{{ form.document.id_for_label }}");
+            const fileInfo = document.getElementById("file-info");
+        
+            if (fileInput) {
+                fileInput.addEventListener("change", function () {
+                    const file = fileInput.files[0];
+                    if (file) {
+                        const ext = file.name.split('.').pop().toLowerCase();
+                        let icon = "📄";  // default icon
+        
+                        if (ext === "pdf") icon = "📕";
+                        else if (ext === "doc" || ext === "docx") icon = "📝";
+                        else if (ext === "txt") icon = "📃";
+        
+                        fileInfo.innerHTML = `${icon} <strong>${file.name}</strong>`;
+                    } else {
+                        fileInfo.innerHTML = "";
+                    }
+                });
+            } else {
+                console.error("File input element not found.");
+            }
+        })
+    </script>
+
+</head>
+<body>
+
+<header class="header">
+    <a href="{% url 'analyzer_app:welcome' %}"><h1><span class="brand-bold">Brain Boost</span> 🚀</h1></a>
+    <a href="{% url 'analyzer_app:login' %}" class="login-btn">Login 👤</a>
+</header>
+
+<main class="container">
+
+    <div class="instruction">
+        <p><strong>Smart Learning Starts Here!</strong></p>
+        <ol>
+            <li>Upload your file</li>
+            <li>Select Summary or Practice Questions</li>
+            <li>Get AI-powered insights instantly!</li>
+        </ol>
+    </div>
+    <div class="container-2">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            <div class="error">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <!-- Document Upload -->
+        <label class="upload-label" for="{{ form.document.id_for_label }}">Upload here!</label>
+        <div class="upload-box" onclick="document.getElementById('{{ form.document.id_for_label }}').click();">
+            {{ form.document }}
+            <p>Drag & Drop files or <span class="browse-text">Browse</span></p>
+            <div class="form-text">Supported formats: .txt, .pdf, .docx. Max file size: 5MB</div>
+            <div id="file-info" class="file-info"></div>
+        </div>
+        {% if form.document.errors %}
+            <div class="error">{{ form.document.errors.0 }}</div>
+        {% endif %}
+    
+        <!-- Analysis Type -->
+        <div class="mb-3">
+            <label class="select" for="{{ form.analysis_type.id_for_label }}"><strong>Choose Analysis Type:</strong></label>
+            {{ form.analysis_type }}
+        </div>
+        {% if form.analysis_type.errors %}
+            <div class="error">{{ form.analysis_type.errors.0 }}</div>
+        {% endif %}
+
+        <button type="submit" class="action-btn">💡 Boost My Understanding!</button>
+    </form>
+
+    <!-- Error Message -->
+    {% if error_message %}
+        <div class="error-box">
+            <h4>⚠️ Error:</h4>
+            <p>{{ error_message }}</p>
+        </div>
+    {% endif %}
+
+    <!-- Text Preview -->
+    {% if extracted_text_preview %}
+        <div class="result-section mt-4">
+            <h4>🔍 Text Preview:</h4>
+            <div class="preview-box">
+                {{ extracted_text_preview }}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Analysis Result -->
+    {% if analysis_result %}
+        <div class="result-section mt-4">
+            <h4>✨ BrainBoost Analysis Complete! ✨</h4>
+            {% if analysis_result.summary %}
+                <h5>Summary:</h5>
+                <p style="white-space: pre-wrap;">{{ analysis_result.summary }}</p>
+            {% elif analysis_result.questions %}
+                <h5>Generated Questions:</h5>
+                <ul class="list-group">
+                    {% for question in analysis_result.questions %}
+                        <li class="list-group-item">{{ question }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No summary or questions were generated.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+    </div>
+</main>
+
+</body>
+</html>
+

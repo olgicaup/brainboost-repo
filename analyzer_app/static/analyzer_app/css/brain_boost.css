@@ -1,0 +1,139 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #b565a7, #f5e98b);
+    color: #333;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #944aaa;
+    padding: 0 2rem;
+    color: white;
+}
+
+.brand-bold {
+    font-weight: bold;
+    color: #e6e600;
+}
+
+.login-btn {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 700px;
+    margin: 2rem auto;
+    min-height: 79.8vh;
+}
+
+.container-2 {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.instruction {
+    color: white;
+    font-size: 1rem;
+}
+
+.upload-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.upload-box {
+    border: 2px dashed #c083c0;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.upload-box input[type="file"] {
+    display: none;
+}
+
+.upload-box p {
+    margin: 0.5rem 0;
+    color: #555;
+}
+
+.browse-text {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.form-text {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 0.5rem;
+}
+
+.action-btn {
+    background: linear-gradient(to right, #d199d1, #f5e98b);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+}
+
+.result-section {
+    margin-top: 2rem;
+}
+
+.extracted-text-preview {
+    background-color: #f7f7f7;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+.file-info {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.select {
+    padding-right: 0.5rem;
+}
+
+#id_analysis_type {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    padding-left: 1rem;
+    font-size: 16px;
+    width: 72%;
+    transition: all 0.3s ease;
+}
+
+#id_analysis_type:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

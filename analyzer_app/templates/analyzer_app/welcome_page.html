@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brain Boost - Welcome</title>
+  <link rel="stylesheet" href="../../static/analyzer_app/css/welcome_page.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <h1>Welcome to </br> Brain Boost!</h1>
+      <p class="subtitle">Boost Your Brainpower 🧠</p>
+      <p class="description">
+        Turn any document into a quick summary or testing questions to master the content effortlessly.
+      </p>
+      <div class="buttons">
+        <form action="{% url 'analyzer_app:brainboost' %}" method="get">
+          <button class="start" type="submit">Get started</button>
+        </form>
+        <form action="{% url 'analyzer_app:login' %}" method="get">
+          <button class="login" type="submit">Log in</button>
+        </form>
+      </div>
+    </div>
+    <div class="right">
+      <img class="img" src="../../static/analyzer_app/images/books_welcome_page.png" alt="Stack of books" />
+    </div>
+  </div>
+</body>
+</html>

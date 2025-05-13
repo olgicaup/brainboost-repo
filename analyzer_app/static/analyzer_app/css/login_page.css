@@ -1,0 +1,82 @@
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      width: 100%;
+      display: flex;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .sidebar {
+      width: 30%;
+      background: linear-gradient(to bottom, #c084fc, #fde68a);
+    }
+
+    .main {
+      width: 70%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-box {
+      width: 300px;
+    }
+
+    .login-box h2 {
+      margin-bottom: 8px;
+    }
+
+    .login-box p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(to right, #c084fc, #fde68a);
+      border: none;
+      border-radius: 20px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .signup {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .signup a {
+      color: blue;
+      text-decoration: none;
+    }
+
+    .back-arrow {
+      position: absolute;
+      left: 20px;
+      font-size: 4rem;
+      color: white;
+      text-decoration: none;
+    }

@@ -1,0 +1,85 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #8e44ad, #f1c40f);
+  height: 100vh;
+  color: white;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  padding-left: 7rem;
+  box-sizing: border-box;
+}
+
+.left {
+  max-width: 60%;
+}
+
+h1 {
+  font-size: 6rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #fff176, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-weight: bold;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  font-size: 1.2rem;
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+button {
+  padding: 0.7rem 3rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #fff176 !important;
+}
+
+button.login, button.start {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+button.login:hover, button.start:hover{
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.right img {
+  max-height: 99vh;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+}

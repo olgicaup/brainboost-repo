@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="../../static/analyzer_app/css/login_page.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <a href="{% url 'analyzer_app:welcome' %}" class="back-arrow">&#8592;</a>
+    </div>
+    <div class="main">
+      <div class="login-box">
+        <h2>Login</h2>
+        <p>Welcome back! Please login to your account</p>
+        <form>
+          <input type="text" placeholder="User Name" required>
+          <input type="password" placeholder="Password" required>
+          <button type="submit">Login</button>
+        </form>
+        <div class="signup">
+          New User? <a href="#">Sign up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
