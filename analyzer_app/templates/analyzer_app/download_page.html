@@ -1,0 +1,8 @@
+{% if download_url %}
+    <div class="download-section">
+        <h3>Your processed file is ready:</h3>
+        <a href="{% url 'analyzer_app:download_processed_file' file_name=download_url %}" class="btn btn-primary">
+            Download Processed File
+        </a>
+    </div>
+{% endif %}
