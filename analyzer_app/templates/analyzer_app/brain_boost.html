@@ -6,38 +6,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../static/analyzer_app/css/brain_boost.css" />
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const fileInput = document.getElementById("{{ form.document.id_for_label }}");
-            const fileInfo = document.getElementById("file-info");
-        
-            if (fileInput) {
-                fileInput.addEventListener("change", function () {
-                    const file = fileInput.files[0];
-                    if (file) {
-                        const ext = file.name.split('.').pop().toLowerCase();
-                        let icon = "📄";  // default icon
-        
-                        if (ext === "pdf") icon = "📕";
-                        else if (ext === "doc" || ext === "docx") icon = "📝";
-                        else if (ext === "txt") icon = "📃";
-        
-                        fileInfo.innerHTML = `${icon} <strong>${file.name}</strong>`;
-                    } else {
-                        fileInfo.innerHTML = "";
-                    }
-                });
-            } else {
-                console.error("File input element not found.");
-            }
-        })
-    </script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById("{{ form.document.id_for_label }}");
+        const fileInfo = document.getElementById("file-info");
+        const uploadBox = document.querySelector(".upload-box");
 
+        if (fileInput) {
+            fileInput.addEventListener("change", function () {
+                const file = fileInput.files[0];
+                if (file) {
+                    const ext = file.name.split('.').pop().toLowerCase();
+                    let icon = "📄";
+
+                    if (ext === "pdf") icon = "📕";
+                    else if (ext === "doc" || ext === "docx") icon = "📝";
+                    else if (ext === "txt") icon = "📃";
+                    else if (ext === "ppt" || ext === "pptx") icon = "📊";
+
+                    fileInfo.innerHTML = `${icon} <strong>${file.name}</strong>`;
+                } else {
+                    fileInfo.innerHTML = "";
+                }
+            });
+
+            // Drag-and-drop functionality
+            uploadBox.addEventListener("dragover", function (e) {
+                e.preventDefault();
+                uploadBox.classList.add("dragover");
+            });
+
+            uploadBox.addEventListener("dragleave", function () {
+                uploadBox.classList.remove("dragover");
+            });
+
+            uploadBox.addEventListener("drop", function (e) {
+                e.preventDefault();
+                uploadBox.classList.remove("dragover");
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    fileInput.dispatchEvent(new Event("change")); // trigger preview
+                }
+            });
+
+            // Click to open file selector
+            uploadBox.addEventListener("click", function () {
+                fileInput.click();
+            });
+        } else {
+            console.error("File input element not found.");
+        }
+    });
+</script>
 </head>
-<body>
 
+
+<body>
 <header class="header">
     <a href="{% url 'analyzer_app:welcome' %}"><h1><span class="brand-bold">Brain Boost</span> 🚀</h1></a>
-    <a href="{% url 'analyzer_app:login' %}" class="login-btn">Login 👤</a>
+
+    <div class="header-actions">
+        {% if user.is_authenticated %}
+            <a href="{% url 'analyzer_app:favorites' %}" class="heart-icon">❤️</a>
+            <a href="{% url 'analyzer_app:logout' %}" class="login-btn">Logout 🔒</a>
+        {% else %}
+            <a href="{% url 'analyzer_app:login' %}" class="login-btn">Login 👤</a>
+        {% endif %}
+    </div>
 </header>
 
 <main class="container">
@@ -53,7 +88,7 @@
     <div class="container-2">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        
+
         {% if form.non_field_errors %}
             <div class="error">{{ form.non_field_errors }}</div>
         {% endif %}
@@ -63,13 +98,13 @@
         <div class="upload-box" onclick="document.getElementById('{{ form.document.id_for_label }}').click();">
             {{ form.document }}
             <p>Drag & Drop files or <span class="browse-text">Browse</span></p>
-            <div class="form-text">Supported formats: .txt, .pdf, .docx. Max file size: 5MB</div>
+            <div class="form-text">Supported formats: .txt, .pdf, .pptx, .docx. Max file size: 5MB</div>
             <div id="file-info" class="file-info"></div>
         </div>
         {% if form.document.errors %}
             <div class="error">{{ form.document.errors.0 }}</div>
         {% endif %}
-    
+
         <!-- Analysis Type -->
         <div class="mb-3">
             <label class="select" for="{{ form.analysis_type.id_for_label }}"><strong>Choose Analysis Type:</strong></label>
@@ -79,7 +114,17 @@
             <div class="error">{{ form.analysis_type.errors.0 }}</div>
         {% endif %}
 
-        <button type="submit" class="action-btn">💡 Boost My Understanding!</button>
+
+         <div class="button-group">
+            <button type="submit" class="action-btn">💡 Boost My Understanding!</button>
+           {% if request.user.is_authenticated and download_url %}
+    <a href="{% url 'analyzer_app:download_processed_file' file_name=download_url %}" class="action-btn button-link">💡 Download the File</a>
+{% elif not request.user.is_authenticated %}
+    <p>🔒 Please <a href="{% url 'analyzer_app:login' %}">login</a> to download the file.</p>
+{% else %}
+    <p>There are no files available for download yet.</p>
+{% endif %}
+        </div>
     </form>
 
     <!-- Error Message -->
@@ -121,7 +166,7 @@
     {% endif %}
     </div>
 </main>
-
 </body>
+
 </html>
 

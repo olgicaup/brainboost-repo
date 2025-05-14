@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="../../static/analyzer_app/css/login_page.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <a href="{% url 'analyzer_app:login' %}" class="back-arrow">&#8592;</a>
+    </div>
+    <div class="main">
+      <div class="login-box">
+        <h2>Sign Up</h2>
+        <p>Create a new account below</p>
+        <form method="POST" action="{% url 'analyzer_app:signup' %}">
+          {% csrf_token %}
+          <input type="text" name="username" placeholder="User Name" required>
+          <input type="password" name="password1" placeholder="Password" required>
+          <input type="password" name="password2" placeholder="Confirm Password" required>
+          <button type="submit">Sign Up</button>
+        </form>
+        {% if messages %}
+          <ul class="message-list">
+            {% for message in messages %}
+              <li class="error-message">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        <div class="signup">
+          Already have an account? <a href="{% url 'analyzer_app:login' %}">Log in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

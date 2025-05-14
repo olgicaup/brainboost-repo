@@ -94,6 +94,9 @@ body {
     font-weight: bold;
     width: 100%;
     margin-top: 1rem;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
 }
 
 .action-btn:hover {
@@ -136,4 +139,39 @@ body {
 #id_analysis_type:focus {
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.upload-box.dragover {
+    border-color: #555;
+    background-color: #f9f9f9;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.heart-icon {
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.button-link {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
 }

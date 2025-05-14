@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Favorite Documents | BrainBoost</title>
+    <link rel="stylesheet" href="../../static/analyzer_app/css/brain_boost.css" />
+</head>
+<body>
+    <header class="header">
+        <a href="{% url 'analyzer_app:welcome' %}"><h1><span class="brand-bold">Brain Boost</span> 🚀</h1></a>
+        <a href="{% url 'analyzer_app:logout' %}" class="login-btn">Logout 🔒</a>
+    </header>
+
+    <main class="container">
+        <h2>💖 Your Favorite Documents</h2>
+
+        {% if favorite_docs %}
+            <ul class="list-group">
+                {% for doc in favorite_docs %}
+                    <li class="list-group-item">{{ doc.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You haven't saved any favorites yet.</p>
+        {% endif %}
+    </main>
+</body>
+</html>
