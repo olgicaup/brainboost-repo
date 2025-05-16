@@ -1,9 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Your Favorite Documents | BrainBoost</title>
-    <link rel="stylesheet" href="../../static/analyzer_app/css/brain_boost.css" />
+    <link rel="stylesheet" href="{% static 'analyzer_app/css/favorite.css' %}" />
 </head>
 <body>
     <header class="header">
@@ -11,18 +12,26 @@
         <a href="{% url 'analyzer_app:logout' %}" class="login-btn">Logout 🔒</a>
     </header>
 
-    <main class="container">
-        <h2>💖 Your Favorite Documents</h2>
+   <main class="container-2">
+    <h2 class="favorites-title"> Your Favorite Documents! </h2>
 
-        {% if favorite_docs %}
-            <ul class="list-group">
-                {% for doc in favorite_docs %}
-                    <li class="list-group-item">{{ doc.name }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>You haven't saved any favorites yet.</p>
-        {% endif %}
-    </main>
+    {% if favorites %}
+        <div class="favorites-list">
+            {% for doc in favorites %}
+                <div class="favorite-row">
+                    <span class="file-name">📄 {{ doc.file_name }}</span>
+                    <div class="row-actions">
+                        <a href="{% url 'analyzer_app:download_processed_file' file_name=doc.file_name %}" class="icon-btn" title="Download">📥</a>
+                        <a href="{% url 'analyzer_app:delete_favorite' file_id=doc.id %}" class="icon-btn delete" title="Delete">🗑</a>
+                    </div>
+                </div>
+                <hr class="fav-divider">
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-favorites">You haven't saved any favorites yet.</p>
+    {% endif %}
+</main>
+
 </body>
 </html>

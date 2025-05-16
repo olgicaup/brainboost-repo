@@ -10,6 +10,9 @@ import os
 import uuid
 from django.conf import settings
 from django.http import FileResponse, Http404, HttpResponse
+from .models import FavoriteDocument
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
 
 def logout_view(request):
@@ -78,13 +81,22 @@ def analyze_document_view(request):
 
 def welcome_page(request):
     return render(request, 'analyzer_app/welcome_page.html')
+@login_required
 def favorites_page(request):
-    # Replace this with actual retrieval logic
-    favorite_docs = []  # Placeholder for your saved favorite documents
+    if request.method == 'POST':
+        file_name = request.POST.get('file_name')
+        if file_name:
+            FavoriteDocument.objects.create(user=request.user, file_name=file_name)
+            return redirect('analyzer_app:favorites')
 
-    return render(request, 'analyzer_app/favorites.html', {
-        'favorite_docs': favorite_docs,
-    })
+    favorites = FavoriteDocument.objects.filter(user=request.user)
+    return render(request, 'analyzer_app/favorites.html', {'favorites': favorites})
+
+@login_required
+def delete_favorite(request, file_id):
+    FavoriteDocument.objects.filter(id=file_id, user=request.user).delete()
+    return redirect('analyzer_app:favorites')
+
 def download_processed_file(request, file_name):
     file_path = os.path.join(settings.MEDIA_ROOT, file_name)
     if os.path.exists(file_path):

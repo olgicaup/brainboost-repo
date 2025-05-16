@@ -1,0 +1,82 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #b565a7, #f5e98b);
+    color: #333;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #944aaa;
+    padding: 0 2rem;
+    color: white;
+}
+.brand-bold {
+    font-weight: bold;
+    color: #e6e600;
+}
+
+.login-btn {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+.favorites-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6a11cb;
+    margin-bottom: 2rem;
+}
+
+.favorites-list {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.favorite-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 1.2rem 2rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.file-name {
+   text-align: left;
+    font-size: 1.4rem;
+    color: #333;
+    flex: 1;
+}
+
+.row-actions {
+    display: flex;
+    gap: 20px;
+}
+
+.icon-btn {
+    font-size: 1.6rem;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    color: #000;
+}
+
+.icon-btn:hover {
+    transform: scale(1.2);
+}
+
+.icon-btn.delete {
+    color: #d12d2d;
+}
+
+.fav-divider {
+    border: none;
+    border-bottom: 1px solid #e0d2f1;
+    margin: 0;
+}
