@@ -12,5 +12,8 @@ urlpatterns = [
     path('home/', views.analyze_document_view, name='analyze_document'),
     path('favorites/', views.favorites_page, name='favorites'),
     path('download/<str:file_name>/', views.download_processed_file, name='download_processed_file'),
+    path('favorites/delete/<int:file_id>/', views.delete_favorite, name='delete_favorite'),
+
+
 
 ]

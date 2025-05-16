@@ -118,8 +118,10 @@
          <div class="button-group">
             <button type="submit" class="action-btn">💡 Boost My Understanding!</button>
            {% if request.user.is_authenticated and download_url %}
-    <a href="{% url 'analyzer_app:download_processed_file' file_name=download_url %}" class="action-btn button-link">💡 Download the File</a>
-{% elif not request.user.is_authenticated %}
+        <button type="button" class="action-btn"
+            onclick="window.location.href='{% url 'analyzer_app:download_processed_file' file_name=download_url %}'">
+            ⬇️ Download the File
+        </button>{% elif not request.user.is_authenticated %}
     <p>🔒 Please <a href="{% url 'analyzer_app:login' %}">login</a> to download the file.</p>
 {% else %}
     <p>There are no files available for download yet.</p>
@@ -162,7 +164,13 @@
             {% else %}
                 <p>No summary or questions were generated.</p>
             {% endif %}
-        </div>
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'analyzer_app:favorites' %}">
+                {% csrf_token %}
+                <input type="hidden" name="file_name" value="{{ download_url }}">
+                <button type="submit" class="action-btn">💖 Add to Favorites</button>
+            </form>
+        {% endif %}
     {% endif %}
     </div>
 </main>
