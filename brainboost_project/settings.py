@@ -134,8 +134,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'brainboost_db',
-        'USER': 'Dace123',
-        'PASSWORD': 'Uiktp123',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres12345',
         'HOST': 'localhost',
         'PORT': '5432',
     }

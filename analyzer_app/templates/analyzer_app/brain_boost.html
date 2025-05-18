@@ -29,7 +29,7 @@
                 }
             });
 
-            // Drag-and-drop functionality
+          
             uploadBox.addEventListener("dragover", function (e) {
                 e.preventDefault();
                 uploadBox.classList.add("dragover");
@@ -45,11 +45,11 @@
                 const files = e.dataTransfer.files;
                 if (files.length > 0) {
                     fileInput.files = files;
-                    fileInput.dispatchEvent(new Event("change")); // trigger preview
+                    fileInput.dispatchEvent(new Event("change")); 
                 }
             });
 
-            // Click to open file selector
+            
             uploadBox.addEventListener("click", function () {
                 fileInput.click();
             });
@@ -93,7 +93,7 @@
             <div class="error">{{ form.non_field_errors }}</div>
         {% endif %}
 
-        <!-- Document Upload -->
+       
         <label class="upload-label" for="{{ form.document.id_for_label }}">Upload here!</label>
         <div class="upload-box" onclick="document.getElementById('{{ form.document.id_for_label }}').click();">
             {{ form.document }}
@@ -105,7 +105,7 @@
             <div class="error">{{ form.document.errors.0 }}</div>
         {% endif %}
 
-        <!-- Analysis Type -->
+        
         <div class="mb-3">
             <label class="select" for="{{ form.analysis_type.id_for_label }}"><strong>Choose Analysis Type:</strong></label>
             {{ form.analysis_type }}
@@ -117,19 +117,11 @@
 
          <div class="button-group">
             <button type="submit" class="action-btn">💡 Boost My Understanding!</button>
-           {% if request.user.is_authenticated and download_url %}
-        <button type="button" class="action-btn"
-            onclick="window.location.href='{% url 'analyzer_app:download_processed_file' file_name=download_url %}'">
-            ⬇️ Download the File
-        </button>{% elif not request.user.is_authenticated %}
-    <p>🔒 Please <a href="{% url 'analyzer_app:login' %}">login</a> to download the file.</p>
-{% else %}
-    <p>There are no files available for download yet.</p>
-{% endif %}
+           
         </div>
     </form>
 
-    <!-- Error Message -->
+    
     {% if error_message %}
         <div class="error-box">
             <h4>⚠️ Error:</h4>
@@ -137,7 +129,7 @@
         </div>
     {% endif %}
 
-    <!-- Text Preview -->
+    
     {% if extracted_text_preview %}
         <div class="result-section mt-4">
             <h4>🔍 Text Preview:</h4>
@@ -147,7 +139,7 @@
         </div>
     {% endif %}
 
-    <!-- Analysis Result -->
+    
     {% if analysis_result %}
         <div class="result-section mt-4">
             <h4>✨ BrainBoost Analysis Complete! ✨</h4>
@@ -172,9 +164,17 @@
             </form>
         {% endif %}
     {% endif %}
+    {% if request.user.is_authenticated and download_url %}
+        <button type="button" class="action-btn"
+            onclick="window.location.href='{% url 'analyzer_app:download_processed_file' file_name=download_url %}'">
+            ⬇️ Download the File
+        </button>{% elif not request.user.is_authenticated %}
+    <p>🔒 Please <a href="{% url 'analyzer_app:login' %}">login</a> to download the file.</p>
+{% else %}
+    <p>There are no files available for download yet.</p>
+{% endif %}
     </div>
 </main>
 </body>
 
 </html>
-

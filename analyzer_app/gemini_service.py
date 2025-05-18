@@ -13,7 +13,7 @@ try:
 except Exception as e:
     print(f"Error configuring Gemini API (likely missing API key or invalid key): {e}")
 
-MODEL_NAME = 'gemini-1.5-flash'  # A good default for speed and cost
+MODEL_NAME = 'gemini-1.5-flash'
 
 def call_gemini_api(document_text, analysis_type):
     """
@@ -29,13 +29,13 @@ def call_gemini_api(document_text, analysis_type):
         if not document_text or not isinstance(document_text, str) or not document_text.strip():
             return {"error": "Document text is empty or invalid. Cannot perform analysis."}
 
-        # Detect language of the uploaded document
+
         try:
             language_code = detect(document_text)
         except Exception:
-            language_code = 'en'  # Fallback to English if detection fails
+            language_code = 'en'
 
-        # Language-aware prompt
+
         if analysis_type == 'summarize':
             prompt = (
                 f"Please provide a concise and informative summary of the following document. "
