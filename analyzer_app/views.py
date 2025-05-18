@@ -30,7 +30,7 @@ def signup_page(request):
             messages.error(request, 'Username already taken.')
         else:
             user = User.objects.create_user(username=username, password=password1)
-            login(request, user)  # Log the user in after sign-up
+            login(request, user)
             return redirect('analyzer_app:login')
 
     return render(request, 'analyzer_app/signup_page.html')
@@ -112,7 +112,7 @@ def login_page(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('analyzer_app:brainboost')  # redirect after successful login
+            return redirect('analyzer_app:brainboost')
         else:
             messages.error(request, 'Invalid username or password.')
 
