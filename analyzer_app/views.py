@@ -126,6 +126,7 @@ def brain_boost_page(request):
     download_url = None
 
     if request.method == 'POST':
+        print("Custom file name received:", request.POST.get('custom_file_name'))
         form = DocumentAnalysisForm(request.POST, request.FILES)
         if form.is_valid():
             document_file = form.cleaned_data['document']
@@ -156,7 +157,23 @@ def brain_boost_page(request):
                         if not os.path.exists(settings.MEDIA_ROOT):
                             os.makedirs(settings.MEDIA_ROOT)
 
-                        processed_file_name = f"brainboost_result_{uuid.uuid4().hex[:8]}.txt"
+                        custom_name = request.POST.get('custom_file_name', '').strip()
+                        if custom_name:
+                            safe_name = "".join(
+                                c for c in custom_name if c.isalnum() or c in (' ', '_', '-')).strip().replace(" ", "_")
+                            processed_file_name = f"{safe_name}.txt"
+
+                            # Check for duplicates and add number if needed
+                            file_path = os.path.join(settings.MEDIA_ROOT, processed_file_name)
+                            base_name, ext = os.path.splitext(processed_file_name)
+                            counter = 1
+                            while os.path.exists(file_path):
+                                processed_file_name = f"{base_name}_{counter}{ext}"
+                                file_path = os.path.join(settings.MEDIA_ROOT, processed_file_name)
+                                counter += 1
+                        else:
+                            processed_file_name = f"brainboost_result_{uuid.uuid4().hex[:8]}.txt"
+                            file_path = os.path.join(settings.MEDIA_ROOT, processed_file_name)
                         processed_file_path = os.path.join(settings.MEDIA_ROOT, processed_file_name)
 
                         with open(processed_file_path, 'w', encoding='utf-8') as f:
